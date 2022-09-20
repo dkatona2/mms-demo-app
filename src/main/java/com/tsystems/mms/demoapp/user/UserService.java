@@ -17,6 +17,12 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
+
+  public void saveUser(UserDTO userDTO) {
+    User newUser = new User(userDTO);
+    User savedUser = userRepository.save(newUser);
+  }
+
   /**
    * Find all users from the database.
    * @return List of users.
@@ -24,4 +30,6 @@ public class UserService {
   public List<User> getAll() {
     return userRepository.findAll();
   }
+
+
 }

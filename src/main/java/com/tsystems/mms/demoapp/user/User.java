@@ -21,6 +21,13 @@ public class User implements Serializable {
   @Column(name = "email", nullable = false)
   private String email;
 
+  public User() {
+  }
+
+  public User(UserDTO userDTO) {
+    this.email = userDTO.getEmail();
+  }
+
   public Long getId() {
     return id;
   }
