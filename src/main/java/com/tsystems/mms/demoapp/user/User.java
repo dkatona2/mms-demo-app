@@ -1,5 +1,8 @@
 package com.tsystems.mms.demoapp.user;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "demo_user")
+@SQLDelete(sql = "UPDATE demo_user SET user_is_deleted = true where id=? ")
+@Where(clause = "user_is_deleted=false")
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1715994813284718249L;
@@ -21,11 +26,22 @@ public class User implements Serializable {
   @Column(name = "email", nullable = false)
   private String email;
 
+
+
+  @Column(name ="password", nullable = false)
+  private String password;
+
+  @Column(name = "user_is_deleted")
+  private Boolean deleted = false;
+
   public User() {
   }
 
+
+
   public User(UserDTO userDTO) {
     this.email = userDTO.getEmail();
+    this.password = userDTO.getPassword();
   }
 
   public Long getId() {
@@ -42,5 +58,21 @@ public class User implements Serializable {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public Boolean getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
   }
 }

@@ -9,11 +9,13 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="email" type="VARCHAR(512)"/>
+            <column name="password" type="VARCHAR(512)"/>
         </createTable>
     </changeSet>
     <changeSet id="dummy-user" author="mse">
         <insert tableName="demo_user">
             <column name="email">foo@bar.com</column>
+
         </insert>
         <insert tableName="demo_user">
             <column name="email">bar@foo.com</column>

@@ -1,5 +1,6 @@
 package com.tsystems.mms.demoapp.user;
 
+import liquibase.pro.packaged.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,19 @@ public class UserController {
     userService.saveUser(userDTO);
     LOGGER.info("Registering new user");
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/user/{id}")
+  public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    userService.deleteUser(id);
+    LOGGER.warn("Deleting user");
+    return ResponseEntity.ok().build();
+  }
+
+  @PutMapping("/user/{id}")
+  public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+    userService.updateUser(id, userDTO);
+    LOGGER.warn("updating user: " + id);
+    return ResponseEntity.ok().build();
   }
 }
