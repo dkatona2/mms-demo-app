@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "organisational_unit")
@@ -26,8 +27,8 @@ public class OrganisationalUnit implements Serializable {
     @Column(name = "organisational_unit_deleted")
     private Boolean deleted = false;
 
-    @ManyToOne
-    private User user;
+    @OneToMany(mappedBy = "organisationalUnit")
+    private List<User> users;
 
     public Long getId() {
         return id;
@@ -53,11 +54,11 @@ public class OrganisationalUnit implements Serializable {
         this.deleted = deleted;
     }
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

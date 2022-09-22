@@ -1,10 +1,6 @@
 package com.tsystems.mms.demoapp.dto;
 
 import com.tsystems.mms.demoapp.domain.User;
-import com.tsystems.mms.demoapp.dto.OrganisationalUnitListItem;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserDetails {
 
@@ -13,18 +9,19 @@ public class UserDetails {
     private String firstName;
     private String lastName;
     private String gender;
-    private List<OrganisationalUnitListItem> orgList;
+    private Long unitId;
 
 
     public UserDetails() {
     }
 
-    public UserDetails(String email, String password, String firstName, String lastName, String gender) {
+    public UserDetails(String email, String password, String firstName, String lastName, String gender, Long unitId) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        this.unitId = unitId;
 
     }
     public UserDetails(User user) {
@@ -33,18 +30,17 @@ public class UserDetails {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.gender = user.getGender().toString();
-        this.orgList = user.getOrganisationalUnits().stream()
-                .map(OrganisationalUnitListItem::new)
-                .collect(Collectors.toList());
+        this.unitId = user.organisationalUnit.getId();
+
     }
 
 
-    public List<OrganisationalUnitListItem> getOrgList() {
-        return orgList;
+    public Long getUnitId() {
+        return unitId;
     }
 
-    public void setOrgList(List<OrganisationalUnitListItem> orgList) {
-        this.orgList = orgList;
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
     }
 
     public String getFirstName() {

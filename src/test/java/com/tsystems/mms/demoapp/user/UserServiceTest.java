@@ -54,10 +54,10 @@ public class UserServiceTest {
 
   @Test
   void TestIfEmailValid(){
-    User firstUser = new User(1L, "David", "Katona", "katonapontdavid@gmail.com", Gender.MALE, "passwords"  );
-    User secondUser = new User(2L, "David", "Katona", "katonapon23tdavid@gmail.com", Gender.MALE, "passwords" );
-    User thirdUser = new User(3L, "David", "Katona", "katonapontdavidgmailcom", Gender.MALE, "passwords" );
-    User fourthUser = new User(1L, "David", "Katona", "katonapontdavidgmail.com", Gender.MALE, "passwords" );
+    User firstUser = new User(1L, "David", "Katona", "katonapontdavid@gmail.com", Gender.MALE, "passwords", null  );
+    User secondUser = new User(2L, "David", "Katona", "katonapon23tdavid@gmail.com", Gender.MALE, "passwords", null );
+    User thirdUser = new User(3L, "David", "Katona", "katonapontdavidgmailcom", Gender.MALE, "passwords",null );
+    User fourthUser = new User(1L, "David", "Katona", "katonapontdavidgmail.com", Gender.MALE, "passwords",null );
 
     Assertions.assertTrue(userService.checkIfEmailValid(firstUser.getEmail()));
     Assertions.assertTrue(userService.checkIfEmailValid(secondUser.getEmail()));

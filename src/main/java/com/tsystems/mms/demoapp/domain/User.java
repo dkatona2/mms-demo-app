@@ -45,19 +45,21 @@ public class User implements Serializable {
   @Column(name = "user_is_deleted")
   private Boolean deleted = false;
 
-  @OneToMany(mappedBy = "user")
-  private List<OrganisationalUnit> organisationalUnits = new ArrayList<>();
+  @ManyToOne
+  @JoinColumn(name = "unit_id")
+  public OrganisationalUnit organisationalUnit;
 
   public User() {
   }
 
-  public User(Long id, String firstName, String lastName, String email, Gender gender, String password) {
+  public User(Long id, String firstName, String lastName, String email, Gender gender, String password, OrganisationalUnit organisationalUnit) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.gender = gender;
     this.password = password;
+    this.organisationalUnit = organisationalUnit;
   }
 
   public User(UserDetails userDetails) {
@@ -68,12 +70,12 @@ public class User implements Serializable {
     this.gender = Gender.valueOf(userDetails.getGender());
   }
 
-  public List<OrganisationalUnit> getOrganisationalUnits() {
-    return organisationalUnits;
+  public OrganisationalUnit getOrganisationalUnit() {
+    return organisationalUnit;
   }
 
-  public void setOrganisationalUnits(List<OrganisationalUnit> organisationalUnits) {
-    this.organisationalUnits = organisationalUnits;
+  public void setOrganisationalUnit(OrganisationalUnit organisationalUnit) {
+    this.organisationalUnit = organisationalUnit;
   }
 
   public String getFirstName() {
