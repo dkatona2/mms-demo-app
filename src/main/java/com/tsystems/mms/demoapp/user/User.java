@@ -1,14 +1,11 @@
 package com.tsystems.mms.demoapp.user;
 
+import com.sun.istack.NotNull;
+import com.tsystems.mms.demoapp.user.enums.Gender;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -23,10 +20,21 @@ public class User implements Serializable {
   @Column(name = "id", nullable = false)
   protected Long id;
 
+  @Column(name = "user_first_name")
+  @NotNull
+  private String firstName;
+
+  @Column(name = "user_last_name")
+  @NotNull
+  private String lastName;
+
   @Column(name = "email", nullable = false)
   private String email;
 
-
+  @Enumerated(EnumType.STRING)
+  @Column(name = "gender")
+  @NotNull
+  private Gender gender;
 
   @Column(name ="password", nullable = false)
   private String password;
@@ -37,11 +45,36 @@ public class User implements Serializable {
   public User() {
   }
 
-
-
   public User(UserDTO userDTO) {
     this.email = userDTO.getEmail();
     this.password = userDTO.getPassword();
+    this.firstName = userDTO.getFirstName();
+    this.lastName = userDTO.getLastName();
+    this.gender = Gender.valueOf(userDTO.getGender());
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public Gender getGender() {
+    return gender;
+  }
+
+  public void setGender(Gender gender) {
+    this.gender = gender;
   }
 
   public Long getId() {
