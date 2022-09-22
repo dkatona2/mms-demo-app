@@ -1,27 +1,28 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<databaseChangeLog-->
-<!--        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"-->
-<!--        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">-->
-<!--    <changeSet id="create-organisational_unit-tables" author="mse">-->
-<!--        <createTable tableName="organisational_unit">-->
-<!--            <column name="id" autoIncrement="true" type="BIGINT">-->
-<!--                <constraints primaryKey="true"/>-->
-<!--            </column>-->
-<!--            <column name="name" type="VARCHAR(512)"/>-->
-<!--            <column name="deleted" type="BOOLEAN"/>-->
-<!--        </createTable>-->
-<!--    </changeSet>-->
-<!--    <changeSet id="dummy-user" author="mse">-->
-<!--        <insert tableName="demo_user">-->
-<!--            <column name="email">foo@bar.com</column>-->
-
-<!--        </insert>-->
-<!--        <insert tableName="demo_user">-->
-<!--            <column name="email">bar@foo.com</column>-->
-<!--        </insert>-->
-<!--        <insert tableName="demo_user">-->
-<!--            <column name="email">fooBar@bar.com</column>-->
-<!--        </insert>-->
-<!--    </changeSet>-->
-<!--</databaseChangeLog>-->
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="create-organisational_unit-tables" author="mse">
+        <createTable tableName="organisational_unit">
+            <column name="id" autoIncrement="true" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(512)"/>
+            <column name="organisational_unit_deleted" type="BOOLEAN"/>
+            <column name="user_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="dummy-org" author="mse">
+        <insert tableName="organisational_unit">
+            <column name="name">Developer</column>
+            <column name="organisational_unit_deleted">0</column>
+            <column name="user_id">4</column>
+        </insert>
+        <insert tableName="organisational_unit">
+            <column name="name">CEO</column>
+            <column name="organisational_unit_deleted">0</column>
+            <column name="user_id">5</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

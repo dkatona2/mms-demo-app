@@ -1,5 +1,9 @@
 package com.tsystems.mms.demoapp.user;
 
+import com.tsystems.mms.demoapp.domain.User;
+import com.tsystems.mms.demoapp.domain.enums.Gender;
+import com.tsystems.mms.demoapp.repository.UserRepository;
+import com.tsystems.mms.demoapp.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,6 +52,19 @@ public class UserServiceTest {
 
   }
 
+  @Test
+  void TestIfEmailValid(){
+    User firstUser = new User(1L, "David", "Katona", "katonapontdavid@gmail.com", Gender.MALE, "passwords"  );
+    User secondUser = new User(2L, "David", "Katona", "katonapon23tdavid@gmail.com", Gender.MALE, "passwords" );
+    User thirdUser = new User(3L, "David", "Katona", "katonapontdavidgmailcom", Gender.MALE, "passwords" );
+    User fourthUser = new User(1L, "David", "Katona", "katonapontdavidgmail.com", Gender.MALE, "passwords" );
+
+    Assertions.assertTrue(userService.checkIfEmailValid(firstUser.getEmail()));
+    Assertions.assertTrue(userService.checkIfEmailValid(secondUser.getEmail()));
+    Assertions.assertFalse(userService.checkIfEmailValid(thirdUser.getEmail()));
+    Assertions.assertFalse(userService.checkIfEmailValid(fourthUser.getEmail()));
+
+  }
   private User createUser(Long id, String email) {
     User user = new User();
     user.setId(id);

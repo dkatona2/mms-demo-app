@@ -1,9 +1,12 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.dto;
+
+import com.tsystems.mms.demoapp.domain.User;
+import com.tsystems.mms.demoapp.dto.OrganisationalUnitListItem;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDTO {
+public class UserDetails {
 
     private String email;
     private String password;
@@ -13,10 +16,10 @@ public class UserDTO {
     private List<OrganisationalUnitListItem> orgList;
 
 
-    public UserDTO() {
+    public UserDetails() {
     }
 
-    public UserDTO(String email, String password, String firstName, String lastName, String gender) {
+    public UserDetails(String email, String password, String firstName, String lastName, String gender) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -24,7 +27,7 @@ public class UserDTO {
         this.gender = gender;
 
     }
-    public UserDTO(User user) {
+    public UserDetails(User user) {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.firstName = user.getFirstName();

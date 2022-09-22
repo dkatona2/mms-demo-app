@@ -1,4 +1,4 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.domain;
 
 
 import com.sun.istack.NotNull;
@@ -19,7 +19,7 @@ public class OrganisationalUnit implements Serializable {
     @Column(name = "id", nullable = false)
     protected Long id;
 
-    @Column(name = "organisational_unit_name")
+    @Column(name = "name")
     @NotNull
     private String name;
 

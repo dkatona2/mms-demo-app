@@ -1,8 +1,10 @@
 package com.tsystems.mms.demoapp.user;
 
+import com.tsystems.mms.demoapp.domain.User;
+import com.tsystems.mms.demoapp.repository.UserRepository;
+import com.tsystems.mms.demoapp.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;

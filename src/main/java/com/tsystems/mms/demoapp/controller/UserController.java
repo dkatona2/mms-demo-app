@@ -1,6 +1,7 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.controller;
 
-import liquibase.pro.packaged.R;
+import com.tsystems.mms.demoapp.dto.UserDetails;
+import com.tsystems.mms.demoapp.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -35,15 +36,15 @@ public class UserController {
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+  public ResponseEntity<UserDetails> getUserById(@PathVariable Long id) {
     //User foundUser = userService.getUserById(id);
     LOGGER.info("Get user from the database by ID.");
     return new ResponseEntity<>(userService.getUserDTO(id), HttpStatus.OK);
   }
 
   @PostMapping("/registration")
-  public ResponseEntity<Void> saveUser(@RequestBody UserDTO userDTO) throws ValidationException {
-    userService.saveUser(userDTO);
+  public ResponseEntity<Void> saveUser(@RequestBody UserDetails userDetails) throws ValidationException {
+    userService.saveUser(userDetails);
     LOGGER.info("Registering new user");
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
@@ -56,8 +57,8 @@ public class UserController {
   }
 
   @PutMapping("/user/{id}")
-  public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) throws ValidationException {
-    userService.updateUser(id, userDTO);
+  public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDetails userDetails) throws ValidationException {
+    userService.updateUser(id, userDetails);
     LOGGER.warn("updating user: " + id);
     return ResponseEntity.ok().build();
   }

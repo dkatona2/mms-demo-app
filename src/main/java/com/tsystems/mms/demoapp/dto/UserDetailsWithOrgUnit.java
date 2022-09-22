@@ -1,4 +1,4 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.dto;
 
 public class UserDetailsWithOrgUnit {
 

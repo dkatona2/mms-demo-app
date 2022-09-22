@@ -1,9 +1,12 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.service;
 
+import com.tsystems.mms.demoapp.domain.User;
+import com.tsystems.mms.demoapp.dto.AllData;
+import com.tsystems.mms.demoapp.dto.OrganisationalUnitListItem;
+import com.tsystems.mms.demoapp.dto.UserDetails;
+import com.tsystems.mms.demoapp.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This service manages all user.
@@ -41,15 +45,15 @@ public class UserService {
     /**
      * Mapping the entity to the DTO.
      */
-    private void mapUserData(User originalUser, UserDTO userDTO) throws ValidationException {
-        if (checkIfEmailValid(userDTO.getEmail())) {
-            BeanUtils.copyProperties(userDTO, originalUser);
+    private void mapUserData(User originalUser, UserDetails userDetails) throws ValidationException {
+        if (checkIfEmailValid(userDetails.getEmail())) {
+            BeanUtils.copyProperties(userDetails, originalUser);
         } else {
             throw new ValidationException("email is not valid");
         }
     }
 
-    private boolean checkIfEmailValid(String email) {
+    public boolean checkIfEmailValid(String email) {
         boolean isValid = false;
         if (email.matches("^(.+)@(.+)$")) {
             isValid = true;
@@ -79,11 +83,11 @@ public class UserService {
      *
      * @return a boolean whether the save was successful or not.
      */
-    public boolean updateUser(Long id, UserDTO userDTO) throws ValidationException {
+    public boolean updateUser(Long id, UserDetails userDetails) throws ValidationException {
         boolean success = false;
         User user = getUserById(id);
         if (user != null) {
-            mapUserData(user, userDTO);
+            mapUserData(user, userDetails);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             success = true;
         } else {
@@ -97,12 +101,12 @@ public class UserService {
      *
      * @return the saved user's id.
      */
-    public Long saveUser(UserDTO userDTO) throws ValidationException {
+    public Long saveUser(UserDetails userDetails) throws ValidationException {
         User newUser;
         User savedUser;
-        if (checkIfEmailValid(userDTO.getEmail())) {
-            newUser = new User(userDTO);
-            newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        if (checkIfEmailValid(userDetails.getEmail())) {
+            newUser = new User(userDetails);
+            newUser.setPassword(passwordEncoder.encode(userDetails.getPassword()));
             savedUser = userRepository.save(newUser);
             return savedUser.getId();
         } else {
@@ -117,16 +121,17 @@ public class UserService {
      * @return List of users.
      */
     public List<User> getAll() {
-        return userRepository.findAll();
+      return userRepository.findAll();
+
     }
 
-    public UserDTO getUserDTO(Long id) {
-        UserDTO userDTO = null;
+    public UserDetails getUserDTO(Long id) {
+        UserDetails userDetails = null;
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
-            userDTO = new UserDTO(userOptional.get());
+            userDetails = new UserDetails(userOptional.get());
         }
-        return userDTO;
+        return userDetails;
     }
 
 

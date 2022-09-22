@@ -1,7 +1,8 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.domain;
 
 import com.sun.istack.NotNull;
-import com.tsystems.mms.demoapp.user.enums.Gender;
+import com.tsystems.mms.demoapp.domain.enums.Gender;
+import com.tsystems.mms.demoapp.dto.UserDetails;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -50,12 +51,21 @@ public class User implements Serializable {
   public User() {
   }
 
-  public User(UserDTO userDTO) {
-    this.email = userDTO.getEmail();
-    this.password = userDTO.getPassword();
-    this.firstName = userDTO.getFirstName();
-    this.lastName = userDTO.getLastName();
-    this.gender = Gender.valueOf(userDTO.getGender());
+  public User(Long id, String firstName, String lastName, String email, Gender gender, String password) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.gender = gender;
+    this.password = password;
+  }
+
+  public User(UserDetails userDetails) {
+    this.email = userDetails.getEmail();
+    this.password = userDetails.getPassword();
+    this.firstName = userDetails.getFirstName();
+    this.lastName = userDetails.getLastName();
+    this.gender = Gender.valueOf(userDetails.getGender());
   }
 
   public List<OrganisationalUnit> getOrganisationalUnits() {

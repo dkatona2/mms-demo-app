@@ -1,15 +1,18 @@
-package com.tsystems.mms.demoapp.user;
+package com.tsystems.mms.demoapp.dto;
+
+import com.tsystems.mms.demoapp.domain.OrganisationalUnit;
 
 public class OrganisationalUnitListItem {
 
     private String name;
 
-    public OrganisationalUnitListItem() {
-    }
-
     public OrganisationalUnitListItem(OrganisationalUnit organisationalUnit) {
         this.name = organisationalUnit.getName();
     }
+
+
+
+
 
     public String getName() {
         return name;
