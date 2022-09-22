@@ -2,9 +2,7 @@ package com.tsystems.mms.demoapp.service;
 
 
 import com.tsystems.mms.demoapp.domain.OrganisationalUnit;
-import com.tsystems.mms.demoapp.domain.User;
 import com.tsystems.mms.demoapp.dto.OrgDetails;
-import com.tsystems.mms.demoapp.dto.UserDetails;
 import com.tsystems.mms.demoapp.repository.UnitRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
