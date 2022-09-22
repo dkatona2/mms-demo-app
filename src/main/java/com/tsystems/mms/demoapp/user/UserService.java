@@ -120,5 +120,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public UserDTO getUserDTO(Long id) {
+        UserDTO userDTO = null;
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            userDTO = new UserDTO(userOptional.get());
+        }
+        return userDTO;
+    }
+
 
 }

@@ -35,10 +35,10 @@ public class UserController {
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity getUserById(@PathVariable Long id) {
-    User foundUser = userService.getUserById(id);
+  public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    //User foundUser = userService.getUserById(id);
     LOGGER.info("Get user from the database by ID.");
-    return ResponseEntity.ok(foundUser);
+    return new ResponseEntity<>(userService.getUserDTO(id), HttpStatus.OK);
   }
 
   @PostMapping("/registration")

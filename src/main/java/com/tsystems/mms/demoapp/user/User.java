@@ -7,6 +7,8 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "demo_user")
@@ -42,6 +44,9 @@ public class User implements Serializable {
   @Column(name = "user_is_deleted")
   private Boolean deleted = false;
 
+  @OneToMany(mappedBy = "user")
+  private List<OrganisationalUnit> organisationalUnits = new ArrayList<>();
+
   public User() {
   }
 
@@ -51,6 +56,14 @@ public class User implements Serializable {
     this.firstName = userDTO.getFirstName();
     this.lastName = userDTO.getLastName();
     this.gender = Gender.valueOf(userDTO.getGender());
+  }
+
+  public List<OrganisationalUnit> getOrganisationalUnits() {
+    return organisationalUnits;
+  }
+
+  public void setOrganisationalUnits(List<OrganisationalUnit> organisationalUnits) {
+    this.organisationalUnits = organisationalUnits;
   }
 
   public String getFirstName() {
