@@ -32,6 +32,13 @@ public class UserController {
     return ResponseEntity.ok(userService.getAll());
   }
 
+  @GetMapping("/user/{id}")
+  public ResponseEntity getUserById(@PathVariable Long id) {
+    User findUser = userService.getUserById(id);
+    LOGGER.info("Get user from the database by ID.");
+    return ResponseEntity.ok(findUser);
+  }
+
   @PostMapping("/registration")
   public ResponseEntity<Void> saveUser(@RequestBody UserDTO userDTO) {
     userService.saveUser(userDTO);
