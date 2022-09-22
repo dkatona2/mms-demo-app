@@ -54,7 +54,14 @@
             <artifactId>spring-security-crypto</artifactId>
             <version>5.7.3</version>
         </dependency>
-    </dependencies>
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.7</version>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>

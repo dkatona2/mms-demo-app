@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
+
 /**
  * RESTful API controller for managing users.
  */
@@ -40,7 +42,7 @@ public class UserController {
   }
 
   @PostMapping("/registration")
-  public ResponseEntity<Void> saveUser(@RequestBody UserDTO userDTO) {
+  public ResponseEntity<Void> saveUser(@RequestBody UserDTO userDTO) throws ValidationException {
     userService.saveUser(userDTO);
     LOGGER.info("Registering new user");
     return new ResponseEntity<>(HttpStatus.CREATED);
@@ -54,7 +56,7 @@ public class UserController {
   }
 
   @PutMapping("/user/{id}")
-  public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+  public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) throws ValidationException {
     userService.updateUser(id, userDTO);
     LOGGER.warn("updating user: " + id);
     return ResponseEntity.ok().build();
