@@ -8,20 +8,34 @@
             <column name="id" autoIncrement="true" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
+            <column name="user_first_name" type="VARCHAR(512)"/>
+            <column name="user_last_name" type="VARCHAR(512)"/>
             <column name="email" type="VARCHAR(512)"/>
+            <column name="gender" type="VARCHAR(512)"/>
             <column name="password" type="VARCHAR(512)"/>
+            <column name="user_is_deleted" type="boolean"/>
         </createTable>
+    </changeSet>
+    <changeSet id="add-organisation-foreign-key" author="dkatona">
+        <addColumn tableName="demo_user">
+            <column name="unit_id" type="int">
+                <constraints nullable="true"
+                             foreignKeyName="fk_users_organisational_unit_id"
+                             references="organisational_unit(id)" />
+            </column>
+        </addColumn>
     </changeSet>
     <changeSet id="dummy-user" author="mse">
         <insert tableName="demo_user">
-            <column name="email">foo@bar.com</column>
+            <column name="user_first_name">david</column>
+            <column name="user_last_name">katona</column>
+            <column name="email">bar@foo.com</column>
+            <column name="gender">MALE</column>
+            <column name="password">asd123</column>
+            <column name="user_is_deleted">0</column>
+            <column name="unit_id">1</column>
 
         </insert>
-        <insert tableName="demo_user">
-            <column name="email">bar@foo.com</column>
-        </insert>
-        <insert tableName="demo_user">
-            <column name="email">fooBar@bar.com</column>
-        </insert>
     </changeSet>
+
 </databaseChangeLog>

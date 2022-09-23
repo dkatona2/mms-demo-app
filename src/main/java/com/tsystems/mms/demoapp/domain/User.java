@@ -1,20 +1,23 @@
 package com.tsystems.mms.demoapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import com.tsystems.mms.demoapp.domain.enums.Gender;
 import com.tsystems.mms.demoapp.dto.UserDetails;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "demo_user")
 @SQLDelete(sql = "UPDATE demo_user SET user_is_deleted = true where id=? ")
 @Where(clause = "user_is_deleted=false")
+@Getter
+@Setter
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1715994813284718249L;
@@ -43,23 +46,24 @@ public class User implements Serializable {
   private String password;
 
   @Column(name = "user_is_deleted")
+  @JsonIgnore
   private Boolean deleted = false;
 
   @ManyToOne
   @JoinColumn(name = "unit_id")
+  @JsonIgnore
   public OrganisationalUnit organisationalUnit;
 
   public User() {
   }
 
-  public User(Long id, String firstName, String lastName, String email, Gender gender, String password, OrganisationalUnit organisationalUnit) {
+  public User(Long id, String firstName, String lastName, String email, Gender gender, String password) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.gender = gender;
     this.password = password;
-    this.organisationalUnit = organisationalUnit;
   }
 
   public User(UserDetails userDetails) {
@@ -70,67 +74,5 @@ public class User implements Serializable {
     this.gender = Gender.valueOf(userDetails.getGender());
   }
 
-  public OrganisationalUnit getOrganisationalUnit() {
-    return organisationalUnit;
-  }
 
-  public void setOrganisationalUnit(OrganisationalUnit organisationalUnit) {
-    this.organisationalUnit = organisationalUnit;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public Gender getGender() {
-    return gender;
-  }
-
-  public void setGender(Gender gender) {
-    this.gender = gender;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public Boolean getDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(Boolean deleted) {
-    this.deleted = deleted;
-  }
 }

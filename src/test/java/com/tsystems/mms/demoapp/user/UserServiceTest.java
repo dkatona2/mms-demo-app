@@ -2,6 +2,7 @@ package com.tsystems.mms.demoapp.user;
 
 import com.tsystems.mms.demoapp.domain.User;
 import com.tsystems.mms.demoapp.domain.enums.Gender;
+import com.tsystems.mms.demoapp.repository.UnitRepository;
 import com.tsystems.mms.demoapp.repository.UserRepository;
 import com.tsystems.mms.demoapp.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +22,7 @@ public class UserServiceTest {
   @MockBean
   private UserRepository userRepository;
   private PasswordEncoder passwordEncoder;
+  private UnitRepository unitRepository;
 
 
   private UserService userService;
@@ -28,7 +30,7 @@ public class UserServiceTest {
 
   @BeforeEach
   public void setup() {
-    userService = new UserService(userRepository,passwordEncoder);
+    userService = new UserService(userRepository,passwordEncoder, unitRepository);
     testUsers = new ArrayList<>();
     testUsers.add(createUser(1L,"test1.user@foo.bar"));
     testUsers.add(createUser(2L,"test2.user@foo.bar"));
@@ -52,23 +54,24 @@ public class UserServiceTest {
 
   }
 
+  private User createUser(Long id, String email) {
+    User user = new User();
+    user.setId(id);
+    user.setEmail(email);
+    return user;
+  }
+
   @Test
   void TestIfEmailValid(){
-    User firstUser = new User(1L, "David", "Katona", "katonapontdavid@gmail.com", Gender.MALE, "passwords", null  );
-    User secondUser = new User(2L, "David", "Katona", "katonapon23tdavid@gmail.com", Gender.MALE, "passwords", null );
-    User thirdUser = new User(3L, "David", "Katona", "katonapontdavidgmailcom", Gender.MALE, "passwords",null );
-    User fourthUser = new User(1L, "David", "Katona", "katonapontdavidgmail.com", Gender.MALE, "passwords",null );
+    User firstUser = new User(1L, "David", "Katona", "katonapontdavid@gmail.com", Gender.MALE, "passwords" );
+    User secondUser = new User(2L, "David", "Katona", "katonapon23tdavid@gmail.com", Gender.MALE, "passwords");
+    User thirdUser = new User(3L, "David", "Katona", "katonapontdavidgmailcom", Gender.MALE, "passwords");
+    User fourthUser = new User(1L, "David", "Katona", "katonapontdavidgmail.com", Gender.MALE, "passwords");
 
     Assertions.assertTrue(userService.checkIfEmailValid(firstUser.getEmail()));
     Assertions.assertTrue(userService.checkIfEmailValid(secondUser.getEmail()));
     Assertions.assertFalse(userService.checkIfEmailValid(thirdUser.getEmail()));
     Assertions.assertFalse(userService.checkIfEmailValid(fourthUser.getEmail()));
 
-  }
-  private User createUser(Long id, String email) {
-    User user = new User();
-    user.setId(id);
-    user.setEmail(email);
-    return user;
   }
 }

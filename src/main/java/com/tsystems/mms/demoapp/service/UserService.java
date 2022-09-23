@@ -1,9 +1,9 @@
 package com.tsystems.mms.demoapp.service;
 
+import com.tsystems.mms.demoapp.domain.OrganisationalUnit;
 import com.tsystems.mms.demoapp.domain.User;
-import com.tsystems.mms.demoapp.dto.AllData;
-import com.tsystems.mms.demoapp.dto.OrganisationalUnitListItem;
 import com.tsystems.mms.demoapp.dto.UserDetails;
+import com.tsystems.mms.demoapp.repository.UnitRepository;
 import com.tsystems.mms.demoapp.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * This service manages all user.
@@ -27,12 +26,23 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UnitRepository unitRepository;
 
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UnitRepository unitRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.unitRepository = unitRepository;
+    }
+
+    public UserDetails getUserDetails(Long id) {
+        UserDetails userDetails = null;
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            userDetails = new UserDetails(userOptional.get());
+        }
+        return userDetails;
     }
 
     /**
@@ -125,13 +135,13 @@ public class UserService {
 
     }
 
-    public UserDetails getUserDTO(Long id) {
-        UserDetails userDetails = null;
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            userDetails = new UserDetails(userOptional.get());
-        }
-        return userDetails;
+    public void assignOrganisationalUnit(Long userId, Long organisationalUnitId) {
+        User user = getUserById(userId);
+        OrganisationalUnit organisationalUnit = unitRepository.findById(organisationalUnitId)
+                .orElseThrow(() -> new EntityNotFoundException("Org unit not found with id:" + organisationalUnitId));
+
+        user.setOrganisationalUnit(organisationalUnit);
+
     }
 
 
